@@ -1,9 +1,10 @@
 #include "Stepper.h"
 #include "Arduino.h"
 
-Stepper(int nsteps, int rpm, int pin1, int pin2, int pin3, int pin4)
-    : _nsteps(nsteps), _rpm(rpm), _pin1(pin1), _pin2(pin2), _pin3(pin3),
-      _pin4(pin4)
+const int delayms = 2;
+
+Stepper::Stepper(int pin1, int pin2, int pin3, int pin4)
+    : _pin1(pin1), _pin2(pin2), _pin3(pin3), _pin4(pin4)
 {
     pinMode(_pin1, OUTPUT);
     pinMode(_pin2, OUTPUT);
@@ -11,38 +12,50 @@ Stepper(int nsteps, int rpm, int pin1, int pin2, int pin3, int pin4)
     pinMode(_pin4, OUTPUT);
 }
 
-void nStepsForward(int n) {}
+void Stepper::nStepsForward(int n)
+{
+    for (int i = 0; i < n; ++i)
+    {
+        oneFourStepForward();
+    }
+}
 
-void nStepsBackward(int n) {}
+void Stepper::nStepsBackward(int n)
+{
+    for (int i = 0; i < n; ++i)
+    {
+        oneFourStepBackward();
+    }
+}
 
 void Stepper::write(int pin1, int pin2, int pin3, int pin4)
 {
-    digitalWrite(A, a);
-    digitalWrite(B, b);
-    digitalWrite(C, c);
-    digitalWrite(D, d);
+    digitalWrite(_pin1, pin1);
+    digitalWrite(_pin2, pin2);
+    digitalWrite(_pin3, pin3);
+    digitalWrite(_pin4, pin4);
 }
 
-void oneFourStepForward()
+void Stepper::oneFourStepForward()
 {
     write(1, 1, 0, 0);
-    delay(5);
+    delay(delayms);
     write(0, 1, 1, 0);
-    delay(5);
+    delay(delayms);
     write(0, 0, 1, 1);
-    delay(5);
+    delay(delayms);
     write(1, 0, 0, 1);
-    delay(5);
+    delay(delayms);
 }
 
-void oneFourStepBakward()
+void Stepper::oneFourStepBackward()
 {
     write(1, 0, 0, 1);
-    delay(5);
+    delay(delayms);
     write(0, 0, 1, 1);
-    delay(5);
+    delay(delayms);
     write(0, 1, 1, 0);
-    delay(5);
+    delay(delayms);
     write(1, 1, 0, 0);
-    delay(5);
+    delay(delayms);
 }

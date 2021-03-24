@@ -4,7 +4,7 @@
 class Stepper
 {
 public:
-    Stepper(int nsteps, int rpm, int pin1, int pin2, int pin3, int pin4);
+    Stepper(int pin1, int pin2, int pin3, int pin4);
 
     // Take n steps forward.
     void nStepsForward(int n);
@@ -17,6 +17,6 @@ private:
     void write(int, int, int, int);
     void oneFourStepForward();
     void oneFourStepBackward();
-}
+};
 
 #endif
